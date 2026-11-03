@@ -1,0 +1,83 @@
+<div class="container">
+  <div class="loading" *ngIf="loading">
+    <div class="spinner"></div>
+    <p>Loading issue...</p>
+  </div>
+
+  <div class="alert alert-error" *ngIf="error">{{ error }}</div>
+
+  <div class="issue-detail" *ngIf="!loading && issue">
+    <div class="issue-header">
+      <div>
+        <h1>{{ issue.title }}</h1>
+        <div class="issue-meta">
+          <span class="badge" [ngClass]="getStatusClass(issue.status)">{{ issue.status }}</span>
+          <span class="badge" [ngClass]="getPriorityClass(issue.priority)">{{ issue.priority }}</span>
+        </div>
+      </div>
+      <div class="issue-actions">
+        <button class="btn btn-primary" (click)="editIssue()">Edit</button>
+        <button class="btn btn-danger" (click)="deleteIssue()">Delete</button>
+      </div>
+    </div>
+
+    <div class="issue-content">
+      <div class="issue-main card">
+        <h2>Description</h2>
+        <p>{{ issue.description || 'No description provided' }}</p>
+
+        <div class="status-changer">
+          <h3>Change Status</h3>
+          <div class="status-buttons">
+            <button 
+              class="btn" 
+              [class.btn-secondary]="issue.status !== 'To Do'"
+              [class.btn-primary]="issue.status === 'To Do'"
+              (click)="changeStatus('To Do')"
+            >
+              📝 To Do
+            </button>
+            <button 
+              class="btn"
+              [class.btn-secondary]="issue.status !== 'In Progress'"
+              [class.btn-primary]="issue.status === 'In Progress'"
+              (click)="changeStatus('In Progress')"
+            >
+              ⏳ In Progress
+            </button>
+            <button 
+              class="btn"
+              [class.btn-secondary]="issue.status !== 'Done'"
+              [class.btn-success]="issue.status === 'Done'"
+              (click)="changeStatus('Done')"
+            >
+              ✅ Done
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="issue-sidebar">
+        <div class="card">
+          <h3>Details</h3>
+          <div class="detail-item">
+            <strong>Project:</strong>
+            <a [routerLink]="['/projects', issue.projectId._id]">{{ issue.projectId.name }}</a>
+          </div>
+          <div class="detail-item">
+            <strong>Created by:</strong>
+            <span>{{ issue.createdBy.name }}</span>
+          </div>
+          <div class="detail-item">
+            <strong>Created:</strong>
+            <span>{{ issue.createdAt | date:'medium' }}</span>
+          </div>
+          <div class="detail-item">
+            <strong>Updated:</strong>
+            <span>{{ issue.updatedAt | date:'medium' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

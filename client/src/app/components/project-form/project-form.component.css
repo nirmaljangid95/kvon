@@ -1,0 +1,67 @@
+.form-container {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.card {
+  background: white;
+  padding: 2.5rem;
+}
+
+.card h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.card h1::before {
+  content: '📝';
+  background: none;
+  -webkit-text-fill-color: initial;
+  font-size: 2.25rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+}
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 2px solid #f3f4f6;
+}
+
+.form-actions .btn {
+  min-width: 140px;
+}
+
+@media (max-width: 768px) {
+  .card {
+    padding: 1.75rem;
+  }
+
+  .card h1 {
+    font-size: 1.75rem;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .form-actions .btn {
+    width: 100%;
+    min-width: auto;
+  }
+}

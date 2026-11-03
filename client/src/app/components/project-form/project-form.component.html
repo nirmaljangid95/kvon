@@ -1,0 +1,66 @@
+<div class="form-container">
+  <div class="form-card">
+    <div class="form-header">
+      <h1>{{ isEditMode ? '✏️ Edit Project' : '➕ Create New Project' }}</h1>
+      <p>{{ isEditMode ? 'Update your project details' : 'Fill in the details to create a new project' }}</p>
+    </div>
+
+    <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="name">Project Name *</label>
+        <input 
+          type="text" 
+          id="name" 
+          formControlName="name" 
+          placeholder="Enter project name"
+          [class.error]="f['name'].invalid && f['name'].touched"
+        />
+        <div class="error-message" *ngIf="f['name'].invalid && f['name'].touched">
+          <span *ngIf="f['name'].errors?.['required']">Project name is required</span>
+          <span *ngIf="f['name'].errors?.['minlength']">Project name must be at least 3 characters</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea 
+          id="description" 
+          formControlName="description" 
+          placeholder="Enter project description"
+          rows="5"
+        ></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="status">Status *</label>
+        <select 
+          id="status" 
+          formControlName="status"
+          [class.error]="f['status'].invalid && f['status'].touched"
+        >
+          <option value="active">Active</option>
+          <option value="completed">Completed</option>
+          <option value="on-hold">On Hold</option>
+          <option value="archived">Archived</option>
+        </select>
+        <div class="error-message" *ngIf="f['status'].invalid && f['status'].touched">
+          <span *ngIf="f['status'].errors?.['required']">Status is required</span>
+        </div>
+      </div>
+
+      <div class="error-alert" *ngIf="error">
+        {{ error }}
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-secondary" (click)="cancel()" [disabled]="loading">
+          Cancel
+        </button>
+        <button type="submit" class="btn-primary" [disabled]="loading || projectForm.invalid">
+          <span *ngIf="!loading">{{ isEditMode ? 'Update Project' : 'Create Project' }}</span>
+          <span *ngIf="loading">{{ isEditMode ? 'Updating...' : 'Creating...' }}</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

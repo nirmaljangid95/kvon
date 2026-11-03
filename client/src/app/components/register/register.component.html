@@ -1,0 +1,76 @@
+<div class="auth-container">
+  <div class="auth-card card">
+    <div class="auth-header">
+      <div class="auth-logo">
+        <span class="logo-icon">🚀</span>
+        <h1>SprintBoard</h1>
+      </div>
+      <p class="auth-subtitle">Create your account</p>
+    </div>
+
+    <div class="alert alert-error" *ngIf="error">{{ error }}</div>
+
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label class="form-label">Name</label>
+        <input 
+          type="text" 
+          class="form-control" 
+          [(ngModel)]="name" 
+          name="name"
+          placeholder="Enter your name"
+          [disabled]="loading"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input 
+          type="email" 
+          class="form-control" 
+          [(ngModel)]="email" 
+          name="email"
+          placeholder="Enter your email"
+          [disabled]="loading"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input 
+          type="password" 
+          class="form-control" 
+          [(ngModel)]="password" 
+          name="password"
+          placeholder="Enter password (min 6 characters)"
+          [disabled]="loading"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Confirm Password</label>
+        <input 
+          type="password" 
+          class="form-control" 
+          [(ngModel)]="confirmPassword" 
+          name="confirmPassword"
+          placeholder="Confirm your password"
+          [disabled]="loading"
+          required
+        />
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block" [disabled]="loading">
+        {{ loading ? 'Creating account...' : 'Register' }}
+      </button>
+    </form>
+
+    <p class="auth-footer">
+      Already have an account? 
+      <a routerLink="/login" class="auth-link">Login here</a>
+    </p>
+  </div>
+</div>

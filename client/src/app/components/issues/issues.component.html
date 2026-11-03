@@ -1,0 +1,88 @@
+<div class="issues-container">
+  <div class="issues-header">
+    <div>
+      <h1>🎯 Issues</h1>
+      <p>Track and manage all your issues</p>
+    </div>
+  </div>
+
+  <div class="issues-filters">
+    <input 
+      type="text" 
+      class="search-input" 
+      placeholder="🔍 Search issues..."
+      [(ngModel)]="searchTerm"
+      (ngModelChange)="onSearchChange()"
+    />
+    
+    <select class="filter-select" [(ngModel)]="filterProject" (ngModelChange)="onFilterChange()">
+      <option value="all">All Projects</option>
+      <option *ngFor="let project of projects" [value]="project._id">
+        {{ project.name }}
+      </option>
+    </select>
+
+    <select class="filter-select" [(ngModel)]="filterStatus" (ngModelChange)="onFilterChange()">
+      <option value="all">All Status</option>
+      <option value="open">Open</option>
+      <option value="in-progress">In Progress</option>
+      <option value="resolved">Resolved</option>
+      <option value="closed">Closed</option>
+    </select>
+
+    <select class="filter-select" [(ngModel)]="filterPriority" (ngModelChange)="onFilterChange()">
+      <option value="all">All Priorities</option>
+      <option value="low">Low</option>
+      <option value="medium">Medium</option>
+      <option value="high">High</option>
+      <option value="critical">Critical</option>
+    </select>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    <div class="spinner"></div>
+    <p>Loading issues...</p>
+  </div>
+
+  <div *ngIf="error" class="error-alert">
+    {{ error }}
+  </div>
+
+  <div *ngIf="!loading && filteredIssues.length === 0" class="empty-state">
+    <div class="empty-icon">🎯</div>
+    <h3>No issues found</h3>
+    <p *ngIf="searchTerm || filterStatus !== 'all' || filterPriority !== 'all' || filterProject !== 'all'">
+      Try adjusting your filters
+    </p>
+    <p *ngIf="!searchTerm && filterStatus === 'all' && filterPriority === 'all' && filterProject === 'all'">
+      No issues have been created yet
+    </p>
+  </div>
+
+  <div *ngIf="!loading && filteredIssues.length > 0" class="issues-list">
+    <div class="issue-item" *ngFor="let issue of filteredIssues">
+      <div class="issue-main">
+        <h3>{{ issue.title }}</h3>
+        <p class="issue-description">{{ issue.description || 'No description' }}</p>
+        <div class="issue-project">
+          📁 {{ getProjectName(issue) }}
+        </div>
+      </div>
+      
+      <div class="issue-meta">
+        <span class="badge" [ngClass]="getStatusClass(issue.status)">
+          {{ issue.status }}
+        </span>
+        <span class="badge" [ngClass]="getPriorityClass(issue.priority)">
+          {{ issue.priority }}
+        </span>
+        <div class="assignee" *ngIf="issue.assignee">
+          <span>👤 {{ issue.assignee.name }}</span>
+        </div>
+        <div class="issue-date">
+          <small>Created: {{ issue.createdAt | date:'short' }}</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

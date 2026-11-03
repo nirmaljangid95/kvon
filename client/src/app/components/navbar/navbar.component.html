@@ -1,0 +1,20 @@
+<nav class="navbar" *ngIf="isLoggedIn">
+  <div class="navbar-container">
+    <div class="navbar-brand">
+      <a routerLink="/dashboard">
+        <h1>🚀 SprintBoard</h1>
+      </a>
+    </div>
+
+    <div class="navbar-menu">
+      <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+      <a routerLink="/projects" routerLinkActive="active">Projects</a>
+      <a routerLink="/issues" routerLinkActive="active">Issues</a>
+    </div>
+
+    <div class="navbar-user">
+      <span class="user-name">{{ currentUser?.name || currentUser?.email }}</span>
+      <button class="logout-btn" (click)="logout()">Logout</button>
+    </div>
+  </div>
+</nav>

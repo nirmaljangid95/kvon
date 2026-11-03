@@ -1,0 +1,120 @@
+<div class="container">
+
+  <!-- Page Header -->
+  <div class="dashboard-header">
+    <div>
+      <span class="header-subtitle">WORKSPACE OVERVIEW</span>
+      <h1 class="page-title">Dashboard</h1>
+      <p class="header-description">
+        Track your projects, monitor issues and manage your team's progress.
+      </p>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div class="loading" *ngIf="loading">
+    <div class="spinner"></div>
+    <p>Loading dashboard...</p>
+  </div>
+
+  <!-- Error -->
+  <div class="alert alert-error" *ngIf="error">
+    {{ error }}
+  </div>
+
+  <!-- Statistics -->
+  <div class="stats-grid" *ngIf="!loading && stats">
+
+    <div class="stat-card card">
+      <div class="stat-icon icon-blue">📁</div>
+      <div class="stat-content">
+        <p>Total Projects</p>
+        <h3>{{ stats.totalProjects }}</h3>
+      </div>
+    </div>
+
+    <div class="stat-card card">
+      <div class="stat-icon icon-purple">📋</div>
+      <div class="stat-content">
+        <p>Total Issues</p>
+        <h3>{{ stats.totalIssues }}</h3>
+      </div>
+    </div>
+
+    <div class="stat-card card">
+      <div class="stat-icon icon-yellow">📝</div>
+      <div class="stat-content">
+        <p>Open Issues</p>
+        <h3>{{ stats.openIssues }}</h3>
+      </div>
+    </div>
+
+    <div class="stat-card card">
+      <div class="stat-icon icon-orange">⏳</div>
+      <div class="stat-content">
+        <p>In Progress</p>
+        <h3>{{ stats.inProgressIssues }}</h3>
+      </div>
+    </div>
+
+    <div class="stat-card card">
+      <div class="stat-icon icon-green">✓</div>
+      <div class="stat-content">
+        <p>Completed</p>
+        <h3>{{ stats.completedIssues }}</h3>
+      </div>
+    </div>
+
+    <div class="stat-card card">
+      <div class="stat-icon icon-red">🔥</div>
+      <div class="stat-content">
+        <p>High Priority</p>
+        <h3>{{ stats.highPriorityIssues }}</h3>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="quick-actions" *ngIf="!loading">
+
+    <div class="section-header">
+      <div>
+        <h2>Quick Actions</h2>
+        <p>Get started with your workspace</p>
+      </div>
+    </div>
+
+    <div class="actions-grid">
+
+      <a routerLink="/projects/new" class="action-card card">
+        <div class="action-icon icon-blue">+</div>
+        <div class="action-content">
+          <h3>Create Project</h3>
+          <p>Start a new project and organize your work.</p>
+        </div>
+        <span class="action-arrow">→</span>
+      </a>
+
+      <a routerLink="/projects" class="action-card card">
+        <div class="action-icon icon-purple">📁</div>
+        <div class="action-content">
+          <h3>View Projects</h3>
+          <p>Manage and track all your projects.</p>
+        </div>
+        <span class="action-arrow">→</span>
+      </a>
+
+      <a routerLink="/issues" class="action-card card">
+        <div class="action-icon icon-green">📋</div>
+        <div class="action-content">
+          <h3>View Issues</h3>
+          <p>Monitor and manage your issues.</p>
+        </div>
+        <span class="action-arrow">→</span>
+      </a>
+
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,152 @@
+<div class="project-detail-container">
+  <div *ngIf="loading" class="loading">
+    <div class="spinner"></div>
+    <p>Loading project...</p>
+  </div>
+
+  <div *ngIf="error" class="error-alert">
+    {{ error }}
+  </div>
+
+  <div *ngIf="!loading && project" class="project-detail">
+    <!-- Project Header -->
+    <div class="project-header">
+      <div class="header-left">
+        <button class="btn-back" routerLink="/projects">← Back to Projects</button>
+        <h1>{{ project.name }}</h1>
+        <span class="badge" [ngClass]="getStatusClass(project.status || 'active')">
+          {{ project.status || 'active' }}
+        </span>
+      </div>
+      <div class="header-actions">
+        <button class="btn-secondary" (click)="editProject()">✏️ Edit</button>
+        <button class="btn-danger" (click)="deleteProject()">🗑️ Delete</button>
+      </div>
+    </div>
+
+    <!-- Project Info -->
+    <div class="project-info">
+      <p class="description">{{ project.description || 'No description provided' }}</p>
+      <div class="project-meta">
+        <div class="meta-item">
+          <strong>Created:</strong> {{ project.createdAt | date:'medium' }}
+        </div>
+        <div class="meta-item">
+          <strong>Members:</strong> {{ project.members?.length || 0 }}
+        </div>
+        <div class="meta-item">
+          <strong>Total Issues:</strong> {{ issues.length }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Issues Board -->
+    <div class="issues-board">
+      <div class="board-header">
+        <h2>📋 Issues Board</h2>
+      </div>
+
+      <div class="board-columns">
+        <!-- Open Issues -->
+        <div class="board-column">
+          <div class="column-header open-header">
+            <h3>🔓 Open</h3>
+            <span class="count">{{ getIssuesByStatus('open').length }}</span>
+          </div>
+          <div class="issues-list">
+            <div class="issue-card" *ngFor="let issue of getIssuesByStatus('open')">
+              <h4>{{ issue.title }}</h4>
+              <p>{{ issue.description }}</p>
+              <div class="issue-meta">
+                <span class="badge" [ngClass]="getPriorityClass(issue.priority)">
+                  {{ issue.priority }}
+                </span>
+                <span class="assignee" *ngIf="issue.assignee">
+                  👤 {{ issue.assignee.name }}
+                </span>
+              </div>
+            </div>
+            <div *ngIf="getIssuesByStatus('open').length === 0" class="empty-column">
+              No open issues
+            </div>
+          </div>
+        </div>
+
+        <!-- In Progress Issues -->
+        <div class="board-column">
+          <div class="column-header progress-header">
+            <h3>⚡ In Progress</h3>
+            <span class="count">{{ getIssuesByStatus('in-progress').length }}</span>
+          </div>
+          <div class="issues-list">
+            <div class="issue-card" *ngFor="let issue of getIssuesByStatus('in-progress')">
+              <h4>{{ issue.title }}</h4>
+              <p>{{ issue.description }}</p>
+              <div class="issue-meta">
+                <span class="badge" [ngClass]="getPriorityClass(issue.priority)">
+                  {{ issue.priority }}
+                </span>
+                <span class="assignee" *ngIf="issue.assignee">
+                  👤 {{ issue.assignee.name }}
+                </span>
+              </div>
+            </div>
+            <div *ngIf="getIssuesByStatus('in-progress').length === 0" class="empty-column">
+              No issues in progress
+            </div>
+          </div>
+        </div>
+
+        <!-- Resolved Issues -->
+        <div class="board-column">
+          <div class="column-header resolved-header">
+            <h3>✅ Resolved</h3>
+            <span class="count">{{ getIssuesByStatus('resolved').length }}</span>
+          </div>
+          <div class="issues-list">
+            <div class="issue-card" *ngFor="let issue of getIssuesByStatus('resolved')">
+              <h4>{{ issue.title }}</h4>
+              <p>{{ issue.description }}</p>
+              <div class="issue-meta">
+                <span class="badge" [ngClass]="getPriorityClass(issue.priority)">
+                  {{ issue.priority }}
+                </span>
+                <span class="assignee" *ngIf="issue.assignee">
+                  👤 {{ issue.assignee.name }}
+                </span>
+              </div>
+            </div>
+            <div *ngIf="getIssuesByStatus('resolved').length === 0" class="empty-column">
+              No resolved issues
+            </div>
+          </div>
+        </div>
+
+        <!-- Closed Issues -->
+        <div class="board-column">
+          <div class="column-header closed-header">
+            <h3>🔒 Closed</h3>
+            <span class="count">{{ getIssuesByStatus('closed').length }}</span>
+          </div>
+          <div class="issues-list">
+            <div class="issue-card" *ngFor="let issue of getIssuesByStatus('closed')">
+              <h4>{{ issue.title }}</h4>
+              <p>{{ issue.description }}</p>
+              <div class="issue-meta">
+                <span class="badge" [ngClass]="getPriorityClass(issue.priority)">
+                  {{ issue.priority }}
+                </span>
+                <span class="assignee" *ngIf="issue.assignee">
+                  👤 {{ issue.assignee.name }}
+                </span>
+              </div>
+            </div>
+            <div *ngIf="getIssuesByStatus('closed').length === 0" class="empty-column">
+              No closed issues
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
